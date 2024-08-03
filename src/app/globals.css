@@ -2,32 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+/* clerk sign in and sign up form styles */
+.cl-card,
+.cl-footer .cl-footerAction,
+.cl-internal-1dauvpw {
+  background-color: #1c1f2e;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.cl-card {
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.cl-footer .cl-footerAction {
+  width: 100%;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.cl-headerTitle,
+.cl-headerSubtitle,
+.cl-socialButtonsBlockButtonText,
+.cl-dividerText,
+.cl-formFieldLabel,
+.cl-footerActionText,
+.cl-internal-wf8x4b,
+.cl-internal-1fcj7sw {
+  color: white;
+}
+
+.cl-socialButtonsBlockButton {
+  background-color: #444963;
+}
+
+.cl-socialButtonsBlockButton:hover {
+  background-color: #3a3f55;
+}
+
+.cl-footerActionLink {
+  color: blue;
+}
+
+.cl-internal-y44tp9 {
+  margin-bottom: 16px;
+}
+
+.cl-internal-16vtwdp {
+  display: none;
+}
+
+.cl-userButtonPopoverMain {
+  background-color: #282a3a;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+}
+
+.cl-userPreviewMainIdentifier,
+.cl-userPreviewSecondaryIdentifier,
+.cl-userButtonPopoverActionButtonIconBox,
+.cl-userButtonPopoverActionButton {
+  color: white;
+}
+
+.cl-userPreviewSecondaryIdentifier:hover,
+.cl-userButtonPopoverActionButton:hover {
+  color: rgb(85, 85, 243);
+}
+
+.cl-internal-81ln96 {
+  background-color: #282a3a;
 }
