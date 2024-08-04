@@ -12,9 +12,15 @@ const config: Config = {
         dark: {
           1: "#161925",
           2: "#1C1F2E",
+          3: "#1F2339"
+        },
+        light: {
+          1: "#FFFFFF0D"
         },
         blue: {
-          1: "#0E78F9"
+          1: "#0E78F9",
+          2: "#C9DDFF",
+          3: "#ECF0FF"
         }
       },
       backgroundImage: {
