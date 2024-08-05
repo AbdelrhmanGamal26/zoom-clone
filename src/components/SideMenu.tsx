@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -9,12 +9,17 @@ const SideMenu = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="w-[72px] md:w-[274px] text-white bg-dark-2 h-[92.5vh] pt-10 px-4">
+    <nav className="hidden lg:block w-[275px] text-white bg-dark-2 h-[92.5vh] pt-10 px-4">
       <ul>
         {sideMenuLinks.map(({ title, url, icon }) => {
           return (
             <li key={title} className="w-full mb-5">
-              <Link href={url} className={`flex items-center h-[45px] md:h-[50px] w-full p-2 rounded-[8px] ${pathname === url? "bg-blue-1" : ""} hover:bg-blue-1 transition-colors duration-300`}>
+              <Link
+                href={url}
+                className={`flex items-center h-[45px] md:h-[50px] w-full p-2 rounded-[8px] ${
+                  pathname === url ? "bg-blue-1" : ""
+                } hover:bg-blue-1 transition-colors duration-300`}
+              >
                 <Image src={icon} alt="icon" width={24} height={24} />
                 <p className="ms-3 hidden md:block">{title}</p>
               </Link>

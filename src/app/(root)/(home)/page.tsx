@@ -3,7 +3,7 @@ import MeetingCardsContainer from "@/components/MeetingCardsContainer";
 
 const Home = () => {
   return (
-    <div className="text-white w-[calc(100vw-88px)] md:w-[calc(100vw-300px)] mx-auto">
+    <div className="text-white w-full lg:w-[calc(100vw-300px)] mx-0 sm:mx-6 lg:mx-auto">
       <HomePageTopCard />
       <MeetingCardsContainer />
     </div>
