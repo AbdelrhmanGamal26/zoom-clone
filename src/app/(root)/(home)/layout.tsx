@@ -1,6 +1,6 @@
+import { ReactNode } from "react";
 import Header from "@/components/Header";
 import SideMenu from "@/components/SideMenu";
-import { ReactNode } from "react";
 
 const HomeLayout = ({ children }: { children: ReactNode }) => {
   return (

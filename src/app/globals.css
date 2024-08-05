@@ -65,6 +65,18 @@
   }
 }
 
+/* hide the scrollbar */
+/* Hide scrollbar for all elements */
+html {
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For IE and Edge */
+}
+
+/* Webkit browsers like chrome and safari */
+::-webkit-scrollbar {
+  display: none;
+}
+
 /* clerk signIn form styles */
 .cl-socialButtonsBlockButtonText,
 .cl-userButtonPopoverActionButtonIconBox,

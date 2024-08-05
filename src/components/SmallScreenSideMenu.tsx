@@ -21,10 +21,10 @@ const SmallScreenSideMenu = () => {
       <Sheet>
         <SheetTrigger asChild>
           <Image
-            src={hamburgerIcon}
             alt="icon"
             width={27}
             height={27}
+            src={hamburgerIcon}
             className="lg:hidden"
           />
         </SheetTrigger>

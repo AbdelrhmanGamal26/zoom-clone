@@ -1,9 +1,9 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { sideMenuLinks } from "@/constants";
+import { usePathname } from "next/navigation";
 
 const SideMenu = () => {
   const pathname = usePathname();

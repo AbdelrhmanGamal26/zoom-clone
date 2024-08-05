@@ -15,48 +15,46 @@ const MeetingCardsContainer = () => {
   >();
   const router = useRouter();
 
-  const createMeeting = () => {
-
-  }
+  const createMeeting = () => {};
 
   return (
     <div className="flex items-center justify-center flex-wrap w-[95vw] lg:w-full gap-4 mx-auto sm:mx-0 mt-6 sm:mt-16">
       <MeetingCard
-        title="New Meeting"
-        description="Setup a new meeting"
         icon={newMeeting}
+        title="New Meeting"
         cardBgColor="bg-[#FF742E]"
+        description="Setup a new meeting"
         clickHandler={() => setMeetingState("isInstantMeeting")}
       />
       <MeetingCard
-        title="Join Meeting"
-        description="Via invitation link"
         icon={joinMeeting}
+        title="Join Meeting"
         cardBgColor="bg-[#0E78F9]"
+        description="Via invitation link"
         clickHandler={() => setMeetingState("isJoiningMeeting")}
       />
       <MeetingCard
-        title="Schedule Meeting"
-        description="Plan your meeting"
         icon={scheduleMeeting}
+        title="Schedule Meeting"
         cardBgColor="bg-[#830EF9]"
+        description="Plan your meeting"
         clickHandler={() => setMeetingState("isScheduleMeeting")}
       />
       <MeetingCard
-        title="View Recordings"
-        description="Meeting recordings"
         icon={viewRecordings}
+        title="View Recordings"
         cardBgColor="bg-[#F9A90E]"
+        description="Meeting recordings"
         clickHandler={() => router.push("/recordings")}
       />
 
-      <MeetingModal 
-        isOpen={meetingState === "isInstantMeeting"}
-        onClose={() => setMeetingState(undefined)}
-        title="Start an instant meeting"
+      <MeetingModal
         className="text-center"
         buttonText="Start meeting"
         handleClick={createMeeting}
+        title="Start an instant meeting"
+        onClose={() => setMeetingState(undefined)}
+        isOpen={meetingState === "isInstantMeeting"}
       />
     </div>
   );
