@@ -1,7 +1,9 @@
+import PagesHeader from "@/components/PagesHeader";
+
 const PersonalRoom = () => {
   return (
-    <div className="text-white">
-      personal room
+    <div className="text-white p-6">
+      <PagesHeader title="personal room"/>
     </div>
   )
 }

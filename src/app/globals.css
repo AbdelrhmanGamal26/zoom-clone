@@ -84,6 +84,10 @@ html {
   color: white;
 }
 
+.cl-userButtonPopoverActionButton:hover {
+  color: blue;
+}
+
 /* shadCn sideMenu styles */
 .sideMenu button,
 .modalStyles > button:last-of-type {
