@@ -94,3 +94,48 @@ html {
   color: white;
   border: 2px solid white;
 }
+
+.cl-navbarButton {
+  color: white;
+}
+
+.cl-active {
+  color: #0b7af9;
+}
+
+/* animation */
+
+.show-block {
+  position: fixed;
+  right: 0;
+  width: 100%;
+  max-width: 400px;
+  background-color: #1f2339;
+  padding: 10px 20px;
+  margin: 0 20px;
+  display: block;
+  border-radius: 10px;
+  animation: show 0.7s forwards linear;
+  -webkit-animation: show 0.7s forwards linear;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+@keyframes show {
+  0% {
+    animation-timing-function: ease-in;
+    width: 0%;
+  }
+
+  100% {
+    animation-timing-function: ease-in;
+    width: 100%;
+  }
+}
+
+/* stream video stats panel */
+.str-video__call-stats {
+  max-width: 700px;
+}
