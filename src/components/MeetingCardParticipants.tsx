@@ -10,7 +10,6 @@ const MeetingCardParticipants = ({
   return (
     <div className="flex">
       {participants?.map((part, idx) => {
-        console.log(part);
         return (
           <div
             key={part}
