@@ -31,12 +31,12 @@ const MeetingModal = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
         className={cn(
-          "w-[90vw] sm:w-full max-w-[520px] bg-dark-3 py-9 border-none modalStyles",
+          "w-[90vw] sm:w-full max-w-[520px] bg-dark-2 py-9 border-none modalStyles",
           className
         )}
       >
         <h1 className="text-white text-xl font-bold">{title}</h1>
-        <div>
+        <div className="flex justify-center">
           {image && <Image src={image} alt="image" width={72} height={72} />}
         </div>
         {children}

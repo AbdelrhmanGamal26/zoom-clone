@@ -1,39 +1,74 @@
-import Image from "next/image";
-import { cn } from "@/lib/utils";
+"use client";
 
-interface meetingCardDataTypes {
+import Image from "next/image";
+import { Button } from "./ui/button";
+import { useToast } from "./ui/use-toast";
+import MeetingCardParticipants from "./MeetingCardParticipants";
+
+interface MeetingCardProps {
   icon: string;
+  date: string;
+  link: string;
   title: string;
-  description: string;
-  cardBgColor: string;
-  clickHandler: () => void;
+  endTime?: string;
+  startTime: string;
+  // participants?: any[];
+  handleClick?: () => void;
+  cardType: "upcoming" | "previous" | "recording";
 }
 
 const MeetingCard = ({
   icon,
+  link,
+  date,
   title,
-  description,
-  cardBgColor,
-  clickHandler,
-}: meetingCardDataTypes) => {
+  endTime,
+  cardType,
+  startTime,
+  handleClick,
+  // participants,
+}: MeetingCardProps) => {
+  const { toast } = useToast();
+
   return (
-    <div
-      className={cn(
-        "flex flex-col w-[90vw] sm:w-[40vw] lg:w-[300px] justify-between rounded-[8px] p-4 lg:p-6 cursor-pointer h-[200px]",
-        cardBgColor
-      )}
-      onClick={clickHandler}
-    >
-      <div className="flex justify-center items-center w-[35px] md:w-[45px] h-[35px] md:h-[45px] rounded-[6px] bg-[#FFFFFF5E]">
+    <div className="flex flex-col gap-4 justify-between w-full h-[300px] md:h-[280px] xl:h-[250px] bg-dark-3 p-6 rounded-[15px]">
+      <div>
         <Image src={icon} alt="icon" width={28} height={28} />
       </div>
+      <h2 className="text-[clamp(16px,2vw,24px)] font-bold">
+        {title.substring(0, 25)}
+      </h2>
       <div>
-        <h1 className="text-[18px] md:text-[20px] lg:text-[24px] font-bold tracking-[0.5px]">
-          {title}
-        </h1>
-        <p className="text-[14px] md:text-[16px] lg:text-[18px]">
-          {description}
+        <p className="mb-2">Date: {date}</p>
+        <p>
+          Start time{cardType === "previous" && ` and End time`}: {startTime}{" "}
+          {endTime && cardType === "previous" && ` - ${endTime}`}
         </p>
+      </div>
+      <div className="flex flex-col xl:flex-row gap-y-5 xl:gap-y-0 items-center justify-between w-full">
+        {/* {cardType !== "recording" && (
+          <MeetingCardParticipants participants={participants} />
+        )} */}
+        {cardType !== "previous" && (
+          <div className="flex items-center gap-4">
+            <Button
+              className="bg-blue-1 h-[35px] text-[14px]"
+              onClick={handleClick}
+            >
+              {cardType === "upcoming" ? "Start" : "Play"}
+            </Button>
+            <Button
+              className="bg-dark-4 text-[14px]"
+              onClick={() => {
+                console.log(link);
+                navigator.clipboard.writeText(link);
+                toast({ title: "link copied" });
+              }}
+            >
+              Copy invitation
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

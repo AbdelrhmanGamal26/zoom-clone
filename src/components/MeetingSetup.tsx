@@ -1,13 +1,12 @@
 "use client";
 
-import Alert from "./Alert";
-import { Button } from "./ui/button";
 import {
   useCall,
   VideoPreview,
   DeviceSettings,
   useCallStateHooks,
 } from "@stream-io/video-react-sdk";
+import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 
 const MeetingSetup = ({
@@ -15,41 +14,16 @@ const MeetingSetup = ({
 }: {
   onSetIsSetupComplete: (value: boolean) => void;
 }) => {
-  const {
-    useCameraState,
-    useCallEndedAt,
-    useCallStartsAt,
-    useMicrophoneState,
-  } = useCallStateHooks();
+  const { useCameraState, useMicrophoneState } = useCallStateHooks();
   const router = useRouter();
   const { microphone, isMute: micIsMute } = useMicrophoneState();
   const { camera, isMute: cameraIsMute } = useCameraState();
-  const callStartsAt = useCallStartsAt();
-  const callEndedAt = useCallEndedAt();
-  const callHasEnded = !!callEndedAt;
-  const callTimeNotArrived =
-    callStartsAt && new Date(callStartsAt) > new Date();
 
   const call = useCall();
 
   if (!call) {
     throw new Error("useCall must be used within StreamCall component");
   }
-
-  if (callTimeNotArrived)
-    return (
-      <Alert
-        title={`Your Meeting has not started yet. It is scheduled for ${callStartsAt.toLocaleString()}`}
-      />
-    );
-
-  if (callHasEnded)
-    return (
-      <Alert
-        title="The call has been ended by the host"
-        iconUrl="/icons/call-ended.svg"
-      />
-    );
 
   const handleBackwardNavigation = async () => {
     await call?.camera.disable();
