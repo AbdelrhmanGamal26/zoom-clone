@@ -1,5 +1,4 @@
 import CallList from "@/components/CallList";
-import MeetingCard from "@/components/MeetingCard";
 import PagesHeader from "@/components/PagesHeader";
 
 const Upcoming = () => {

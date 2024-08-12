@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
-import MeetingCardParticipants from "./MeetingCardParticipants";
+// import MeetingCardParticipants from "./MeetingCardParticipants";
 
 interface MeetingCardProps {
   icon: string;
