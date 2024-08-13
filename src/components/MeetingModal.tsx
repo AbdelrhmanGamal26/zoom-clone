@@ -2,7 +2,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 import { Button } from "./ui/button";
-import { Dialog, DialogContent } from "./ui/dialog";
+import { Dialog, DialogContent } from "./ui/Dialog";
 
 interface MeetingModalProps {
   title: string;
