@@ -2,28 +2,38 @@
 
 import { useEffect, useState } from "react";
 
-const now = new Date();
-  let timeString = now.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-  let dateString = new Intl.DateTimeFormat("en-US", {
-    dateStyle: "full",
-  }).format(now);
-
 const DateTimeComponent = () => {
-  const [time,setTime] = useState(timeString);
-  const [date,setDate] = useState(dateString);
+  const [time, setTime] = useState(
+    new Date().toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    })
+  );
+  const [date, setDate] = useState(
+    new Intl.DateTimeFormat("en-US", {
+      dateStyle: "full",
+    }).format(Date.now())
+  );
 
   useEffect(() => {
+    const now = new Date();
+    let timeString = now.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+    let dateString = new Intl.DateTimeFormat("en-US", {
+      dateStyle: "full",
+    }).format(now);
+
     const timer = setInterval(() => {
       setTime(timeString);
       setDate(dateString);
-    }, 1000)
-    
+    }, 1000);
+
     return () => clearInterval(timer);
-  }, [])
+  }, []);
 
   return (
     <div className="px-4 mb-4">
