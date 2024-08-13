@@ -84,7 +84,7 @@ const MeetingCardsContainer = () => {
   const meetingLink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${callDetails?.id}`;
 
   return (
-    <div className="flex items-center justify-center flex-wrap w-full gap-4 mx-auto sm:mx-0 mt-6 sm:mt-16">
+    <div className="flex items-center justify-center flex-wrap w-full gap-4 mx-auto sm:mx-0 my-6 sm:my-16">
       <MeetingCardAction
         icon={newMeeting}
         title="New Meeting"

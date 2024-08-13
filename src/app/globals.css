@@ -88,6 +88,11 @@ html {
   color: blue;
 }
 
+.cl-internal-16vtwdp,
+.cl-internal-lk7758 {
+  display: none;
+}
+
 /* shadCn sideMenu styles */
 .sideMenu button,
 .modalStyles > button:last-of-type {
