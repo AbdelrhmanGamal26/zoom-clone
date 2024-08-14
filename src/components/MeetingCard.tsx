@@ -26,8 +26,8 @@ const MeetingCard = ({
   cardType,
   startTime,
   handleClick,
-  // participants,
-}: MeetingCardProps) => {
+}: // participants,
+MeetingCardProps) => {
   const { toast } = useToast();
 
   return (
@@ -38,12 +38,13 @@ const MeetingCard = ({
       <h2 className="text-[clamp(16px,2vw,24px)] font-bold">
         {title.substring(0, 25)}
       </h2>
-      <div>
-        <p className="mb-2">Date: {date}</p>
-        <p>
-          Start time{cardType === "previous" && ` and End time`}: {startTime}{" "}
-          {endTime && cardType === "previous" && ` - ${endTime}`}
-        </p>
+      <div className="flex flex-col gap-4">
+        <p>Date: {date}</p>
+        <div className="flex flex-col lg:flex-row gap-2">
+          <p>Start time: {startTime}</p>
+          {cardType !== "upcoming" && <span className="hidden lg:block">&</span>}
+          <p>End time: {endTime && cardType !== "upcoming" && endTime}</p>
+        </div>
       </div>
       <div className="flex flex-col xl:flex-row gap-y-5 xl:gap-y-0 items-center justify-between w-full">
         {/* {cardType !== "recording" && (

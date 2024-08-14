@@ -14,14 +14,14 @@ interface DropdownMenuContainerProps {
   onSetLayout: (value: CallLayoutType) => void;
 }
 
-const DropdownMenuContainer = ({
+const LayoutTogglerDropdownMenuContainer = ({
   items,
   onSetLayout,
 }: DropdownMenuContainerProps) => {
   return (
-    <div>
+    <div className="hidden md:block">
       <DropdownMenu>
-        <DropdownMenuTrigger className="p-2 rounded-[6px] hover:bg-blue-1">
+        <DropdownMenuTrigger className="p-2.5 rounded-full hover:bg-[#323B44]">
           <LayoutList size={20} />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-dark-4 text-white border-none">
@@ -39,4 +39,4 @@ const DropdownMenuContainer = ({
   );
 };
 
-export default DropdownMenuContainer;
+export default LayoutTogglerDropdownMenuContainer;

@@ -113,12 +113,12 @@ html {
 .show-block {
   position: fixed;
   right: 0;
+  display: block;
   width: 100%;
-  max-width: 400px;
+  max-width: 300px;
   background-color: #1f2339;
   padding: 10px 20px;
   margin: 0 20px;
-  display: block;
   border-radius: 10px;
   animation: show 0.7s forwards linear;
   -webkit-animation: show 0.7s forwards linear;
@@ -143,4 +143,33 @@ html {
 /* stream video stats panel */
 .str-video__call-stats {
   max-width: 700px;
+}
+
+/* stream VideoPreview styles */
+@media (max-width: 639px) {
+  .str-video__paginated-grid-layout__wrapper {
+    width: 95vw;
+    height: 80vh;
+    padding: 10px 0;
+  }
+
+  .str-video__paginated-grid-layout {
+    width: 95vw;
+    height: 80vh;
+  }
+
+  .str-video__paginated-grid-layout--two-four {
+    width: 95vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+  }
+
+  .str-video__participant-view--dominant-speaker,
+  .str-video__video-placeholder,
+  .str-video__participant-view {
+    width: 95vw;
+    height: 38vh;
+  }
 }

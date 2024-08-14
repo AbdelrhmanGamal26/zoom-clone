@@ -17,15 +17,14 @@ const DateTimeComponent = () => {
   );
 
   useEffect(() => {
-    const now = new Date();
-    let timeString = now.toLocaleTimeString("en-US", {
+    let timeString = new Date().toLocaleTimeString("en-US", {
       hour: "2-digit",
       minute: "2-digit",
       second: "2-digit",
     });
     let dateString = new Intl.DateTimeFormat("en-US", {
       dateStyle: "full",
-    }).format(now);
+    }).format(new Date());
 
     const timer = setInterval(() => {
       setTime(timeString);
