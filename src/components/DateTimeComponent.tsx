@@ -10,25 +10,19 @@ const DateTimeComponent = () => {
       second: "2-digit",
     })
   );
-  const [date, setDate] = useState(
-    new Intl.DateTimeFormat("en-US", {
-      dateStyle: "full",
-    }).format(Date.now())
-  );
+  const date = new Intl.DateTimeFormat("en-US", {
+    dateStyle: "full",
+  }).format(Date.now());
 
   useEffect(() => {
-    let timeString = new Date().toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    });
-    let dateString = new Intl.DateTimeFormat("en-US", {
-      dateStyle: "full",
-    }).format(new Date());
-
     const timer = setInterval(() => {
-      setTime(timeString);
-      setDate(dateString);
+      setTime(
+        new Date().toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+      );
     }, 1000);
 
     return () => clearInterval(timer);

@@ -32,9 +32,9 @@ export const CustomRecordCallButton = () => {
   }, [call, isCallRecordingInProgress]);
 
   return (
-    <Button disabled={!call} title="Record call" onClick={toggleRecording}>
+    <Button className="rounded-full p-2.5 bg-gray-500 hidden md:block" disabled={!call} title="Record call" onClick={toggleRecording}>
       <div
-        className={`p-2.5 hover:bg-[#323B44] rounded-full outline-none ${
+        className={`hover:bg-[#323B44] rounded-full outline-none ${
           isCallRecordingInProgress ? "bg-red-500" : "bg-transparent"
         }`}
       >
