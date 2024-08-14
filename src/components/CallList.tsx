@@ -102,28 +102,25 @@ const CallList = ({ type }: CallListType) => {
                   : "/icons/recordings.svg"
               }
               date={
-                new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(
-                  (meeting as Call)?.state?.startsAt
-                ) ||
-                new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(
-                  new Date((meeting as CallRecording).start_time)
-                )
+                type !== "recordings"
+                  ? new Intl.DateTimeFormat("en-US", {
+                      dateStyle: "long",
+                    }).format((meeting as Call)?.state?.startsAt)
+                  : (meeting as CallRecording).start_time.substring(0, 10)
               }
               startTime={
-                new Intl.DateTimeFormat("en-US", {
-                  timeStyle: "short",
-                }).format((meeting as Call)?.state?.startsAt) ||
-                new Intl.DateTimeFormat("en-US", {
-                  timeStyle: "short",
-                }).format(new Date((meeting as CallRecording).start_time))
+                type !== "recordings"
+                  ? new Intl.DateTimeFormat("en-US", {
+                      timeStyle: "short",
+                    }).format((meeting as Call)?.state?.startsAt)
+                  : (meeting as CallRecording).start_time.substring(11, 19)
               }
               endTime={
-                new Intl.DateTimeFormat("en-US", {
-                  timeStyle: "short",
-                }).format((meeting as Call)?.state?.endedAt) ||
-                new Intl.DateTimeFormat("en-US", {
-                  timeStyle: "short",
-                }).format(new Date((meeting as CallRecording).end_time))
+                type !== "recordings"
+                  ? new Intl.DateTimeFormat("en-US", {
+                      timeStyle: "short",
+                    }).format((meeting as Call)?.state?.endedAt)
+                  : (meeting as CallRecording).end_time.substring(11, 19)
               }
               link={
                 type === "recordings"
@@ -142,12 +139,13 @@ const CallList = ({ type }: CallListType) => {
                       });
                     }
               }
-              // participants={(meeting as Call).state?.participants}
             />
           );
         })
       ) : (
-        <h1 className="text-sm sm:text-lg lg:text-2xl font-bold text-white">{noCallsMessage}</h1>
+        <h1 className="text-sm sm:text-lg lg:text-2xl font-bold text-white">
+          {noCallsMessage}
+        </h1>
       )}
     </div>
   );

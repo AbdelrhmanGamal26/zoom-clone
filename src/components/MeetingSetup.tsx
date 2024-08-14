@@ -18,8 +18,8 @@ const MeetingSetup = ({
   const { useCameraState, useMicrophoneState } = useCallStateHooks();
   const { microphone, isMute: micIsMute } = useMicrophoneState();
   const { camera, isMute: cameraIsMute } = useCameraState();
-  const router = useRouter();
   const { toast } = useToast();
+  const router = useRouter();
   const call = useCall();
 
   if (!call) {
@@ -29,14 +29,13 @@ const MeetingSetup = ({
   const handleBackwardNavigation = async ({ reject }: { reject: boolean }) => {
     await call?.camera.disable();
     await call?.microphone.disable();
-    if (
-      call?.state?.participantCount > 1 &&
-      call?.state?.participantCount !== undefined &&
-      call?.state?.participantCount !== 0
-    ) {
+    if (call?.state?.participantCount >= 2) {
       await call?.leave({ reject });
     }
-    if (call?.state?.participantCount === 1) {
+    if (
+      call?.state?.participantCount === 1 ||
+      call?.state?.participantCount === 0
+    ) {
       await call?.endCall();
     }
     onSetIsSetupComplete(false);

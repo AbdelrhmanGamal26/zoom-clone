@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
-// import MeetingCardParticipants from "./MeetingCardParticipants";
 
 interface MeetingCardProps {
   icon: string;
@@ -12,7 +11,6 @@ interface MeetingCardProps {
   title: string;
   endTime?: string;
   startTime: string;
-  // participants?: any[];
   handleClick?: () => void;
   cardType: "upcoming" | "previous" | "recording";
 }
@@ -26,8 +24,7 @@ const MeetingCard = ({
   cardType,
   startTime,
   handleClick,
-}: // participants,
-MeetingCardProps) => {
+}: MeetingCardProps) => {
   const { toast } = useToast();
 
   return (
@@ -42,14 +39,13 @@ MeetingCardProps) => {
         <p>Date: {date}</p>
         <div className="flex flex-col lg:flex-row gap-2">
           <p>Start time: {startTime}</p>
-          {cardType !== "upcoming" && <span className="hidden lg:block">&</span>}
+          {cardType !== "upcoming" && (
+            <span className="hidden lg:block">&</span>
+          )}
           <p>End time: {endTime && cardType !== "upcoming" && endTime}</p>
         </div>
       </div>
       <div className="flex flex-col xl:flex-row gap-y-5 xl:gap-y-0 items-center justify-between w-full">
-        {/* {cardType !== "recording" && (
-          <MeetingCardParticipants participants={participants} />
-        )} */}
         {cardType !== "previous" && (
           <div className="flex items-center gap-4">
             <Button
