@@ -6,6 +6,9 @@ import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useGetCalls } from "@/hooks/useGetCalls";
+import { MEETING_CARD_TYPE } from "@/data/constants";
+import { formatDateAndTime } from "@/utils/formatDateAndTime";
+import { substringFileName } from "@/utils/substringFileName";
 import { Call, CallRecording } from "@stream-io/video-react-sdk";
 
 interface CallListType {
@@ -20,11 +23,11 @@ const CallList = ({ type }: CallListType) => {
 
   const loadCalls = () => {
     switch (type) {
-      case "previous":
+      case MEETING_CARD_TYPE.PREVIOUS:
         return endedCalls;
-      case "upcoming":
+      case MEETING_CARD_TYPE.UPCOMING:
         return upcomingCalls;
-      case "recordings":
+      case MEETING_CARD_TYPE.RECORDINGS:
         return recordings;
       default:
         return [];
@@ -33,11 +36,11 @@ const CallList = ({ type }: CallListType) => {
 
   const loadNoCallsMessage = () => {
     switch (type) {
-      case "previous":
+      case MEETING_CARD_TYPE.PREVIOUS:
         return "No previous meetings found";
-      case "upcoming":
+      case MEETING_CARD_TYPE.UPCOMING:
         return "No upcoming meetings found";
-      case "recordings":
+      case MEETING_CARD_TYPE.RECORDINGS:
         return "No recorded meetings found";
       default:
         return "";
@@ -57,7 +60,6 @@ const CallList = ({ type }: CallListType) => {
 
         setRecordings(recordings);
       } catch (error) {
-        console.log(error);
         toast({ title: "Too many requests. Please try again later" });
       }
     };
@@ -65,89 +67,107 @@ const CallList = ({ type }: CallListType) => {
     if (type === "recordings") {
       fetchRecordings();
     }
-  }, [recordedCalls, type]);
-
-  if (isLoading) return <Loader />;
+  }, [recordedCalls, type, toast]);
 
   const calls = loadCalls();
   const noCallsMessage = loadNoCallsMessage();
 
   return (
-    <div className="overflow-y-scroll h-auto lg:h-[calc(100vh-200px)] grid grid-cols-1 gap-5 md:grid-cols-2">
-      {calls && calls?.length > 0 ? (
-        calls?.map((meeting: Call | CallRecording) => {
-          return (
-            <MeetingCard
-              key={(meeting as Call).id}
-              title={
-                (meeting as Call)?.state?.custom?.description?.substring(
-                  0,
-                  20
-                ) ||
-                (meeting as CallRecording).filename?.substring(0, 20) ||
-                "Personal meeting"
-              }
-              cardType={
-                type === "upcoming"
-                  ? "upcoming"
-                  : type === "previous"
-                  ? "previous"
-                  : "recording"
-              }
-              icon={
-                type === "upcoming"
-                  ? "/icons/upcoming.svg"
-                  : type === "previous"
-                  ? "/icons/previous.svg"
-                  : "/icons/recordings.svg"
-              }
-              date={
-                type !== "recordings"
-                  ? new Intl.DateTimeFormat("en-US", {
-                      dateStyle: "long",
-                    }).format((meeting as Call)?.state?.startsAt)
-                  : (meeting as CallRecording).start_time.substring(0, 10)
-              }
-              startTime={
-                type !== "recordings"
-                  ? new Intl.DateTimeFormat("en-US", {
-                      timeStyle: "short",
-                    }).format((meeting as Call)?.state?.startsAt)
-                  : (meeting as CallRecording).start_time.substring(11, 19)
-              }
-              endTime={
-                type !== "recordings"
-                  ? new Intl.DateTimeFormat("en-US", {
-                      timeStyle: "short",
-                    }).format((meeting as Call)?.state?.endedAt)
-                  : (meeting as CallRecording).end_time.substring(11, 19)
-              }
-              link={
-                type === "recordings"
-                  ? (meeting as CallRecording).url
-                  : `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${
-                      (meeting as Call).id
-                    }`
-              }
-              handleClick={
-                type === "recordings"
-                  ? () => router.push(`${(meeting as CallRecording).url}`)
-                  : async () => {
-                      router.push(`/meeting/${(meeting as Call).id}`);
-                      await (meeting as Call).update({
-                        starts_at: new Date().toISOString(),
-                      });
-                    }
-              }
-            />
-          );
-        })
-      ) : (
-        <h1 className="text-sm sm:text-lg lg:text-2xl font-bold text-white">
-          {noCallsMessage}
-        </h1>
+    <>
+      {isLoading && (
+        <div className="w-full h-full flex justify-center items-center">
+          <Loader />
+        </div>
       )}
-    </div>
+      <div className="overflow-y-scroll h-auto lg:h-[calc(100vh-200px)] w-full grid grid-cols-1 gap-5 md:grid-cols-2">
+        {!!(calls?.length > 0) ? (
+          calls?.map((meeting: Call | CallRecording) => {
+            return (
+              <MeetingCard
+                key={(meeting as Call).id}
+                title={
+                  substringFileName(
+                    (meeting as Call).state?.custom?.description,
+                    0,
+                    20
+                  ) ||
+                  substringFileName(
+                    (meeting as CallRecording)?.filename,
+                    0,
+                    20
+                  ) ||
+                  "Personal meeting"
+                }
+                cardType={
+                  type === MEETING_CARD_TYPE.UPCOMING
+                    ? "upcoming"
+                    : type === MEETING_CARD_TYPE.PREVIOUS
+                    ? "previous"
+                    : "recordings"
+                }
+                date={
+                  type !== MEETING_CARD_TYPE.RECORDINGS
+                    ? formatDateAndTime(
+                        { dateStyle: "long" },
+                        (meeting as Call)?.state?.startsAt
+                      )
+                    : substringFileName(
+                        (meeting as CallRecording).start_time,
+                        0,
+                        10
+                      )
+                }
+                startTime={
+                  type !== MEETING_CARD_TYPE.RECORDINGS
+                    ? formatDateAndTime(
+                        { timeStyle: "short" },
+                        (meeting as Call)?.state?.startsAt
+                      )
+                    : substringFileName(
+                        (meeting as CallRecording).start_time,
+                        11,
+                        19
+                      )
+                }
+                endTime={
+                  type !== MEETING_CARD_TYPE.RECORDINGS
+                    ? formatDateAndTime(
+                        { timeStyle: "short" },
+                        (meeting as Call)?.state?.endedAt
+                      )
+                    : substringFileName(
+                        (meeting as CallRecording).end_time,
+                        11,
+                        19
+                      )
+                }
+                link={
+                  type === MEETING_CARD_TYPE.RECORDINGS
+                    ? (meeting as CallRecording).url
+                    : `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${
+                        (meeting as Call).id
+                      }`
+                }
+                handleClick={
+                  type === MEETING_CARD_TYPE.RECORDINGS
+                    ? () => router.push(`${(meeting as CallRecording).url}`)
+                    : async () => {
+                        router.push(`/meeting/${(meeting as Call).id}`);
+                        await (meeting as Call).update({
+                          starts_at: new Date().toISOString(),
+                        });
+                      }
+                }
+              />
+            );
+          })
+        ) : (
+          <h1 className="text-sm sm:text-lg lg:text-2xl font-bold text-white">
+            {noCallsMessage}
+          </h1>
+        )}
+      </div>
+    </>
   );
 };
 

@@ -1,12 +1,13 @@
-import { Button } from "./ui/button";
+import Loader from "./Loader";
+import { useToast } from "./ui/use-toast";
+import CustomButton from "./CustomButton";
 import { useCallback, useEffect, useState } from "react";
 import RecordingIcon from "./myCustomIcons/RecordingIcon";
-import RecordingStateLoader from "./RecordingStateLoader";
 import { useCall, useCallStateHooks } from "@stream-io/video-react-sdk";
-
 
 export const CustomRecordCallButton = () => {
   const call = useCall();
+  const { toast } = useToast();
   const { useIsCallRecordingInProgress } = useCallStateHooks();
   const isCallRecordingInProgress = useIsCallRecordingInProgress();
   const [isAwaitingResponse, setIsAwaitingResponse] = useState(false);
@@ -27,19 +28,24 @@ export const CustomRecordCallButton = () => {
         await call?.startRecording();
       }
     } catch (e) {
-      console.error(`Failed start recording`, e);
+      toast({ title: `Failed start recording ${e}` });
     }
-  }, [call, isCallRecordingInProgress]);
+  }, [call, isCallRecordingInProgress, toast]);
 
   return (
-    <Button className="rounded-full p-2.5 bg-gray-500 hidden md:block" disabled={!call} title="Record call" onClick={toggleRecording}>
+    <CustomButton
+      className="rounded-full p-2.5 bg-gray-500 hidden md:block"
+      disabled={!call}
+      textContent="Record call"
+      onClick={toggleRecording}
+    >
       <div
         className={`hover:bg-[#323B44] rounded-full outline-none ${
           isCallRecordingInProgress ? "bg-red-500" : "bg-transparent"
         }`}
       >
-        {isAwaitingResponse ? <RecordingStateLoader /> : <RecordingIcon />}
+        {isAwaitingResponse ? <Loader /> : <RecordingIcon />}
       </div>
-    </Button>
+    </CustomButton>
   );
 };

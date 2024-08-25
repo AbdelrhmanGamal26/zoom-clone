@@ -7,15 +7,15 @@ import {
   DropdownMenuContent,
 } from "@/components/ui/dropdown-menu";
 import { LayoutList } from "lucide-react";
-import { CallLayoutType } from "@/constants";
+import { CallLayoutType } from "@/data/constants";
 
 interface DropdownMenuContainerProps {
-  items: string[];
   onSetLayout: (value: CallLayoutType) => void;
 }
 
+const layoutItems = ["grid", "speaker-left", "speaker-right"];
+
 const LayoutTogglerDropdownMenuContainer = ({
-  items,
   onSetLayout,
 }: DropdownMenuContainerProps) => {
   return (
@@ -25,7 +25,7 @@ const LayoutTogglerDropdownMenuContainer = ({
           <LayoutList size={20} />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-dark-4 text-white border-none">
-          {items.map((item) => (
+          {layoutItems.map((item) => (
             <DropdownMenuItem
               key={item}
               onClick={() => onSetLayout(item.toLowerCase() as CallLayoutType)}

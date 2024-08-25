@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
 import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
 
 export const useGetCallById = (id: string | string[]) => {
+  const { toast } = useToast();
   const [call, setCall] = useState<Call>();
   const [isCallLoading, setIsCallLoading] = useState(true);
 
@@ -20,13 +22,13 @@ export const useGetCallById = (id: string | string[]) => {
 
         setIsCallLoading(false);
       } catch (error) {
-        console.error("Failed to load call:", error);
+        toast({ title: "Failed to load call" });
         setIsCallLoading(false);
       }
     };
 
     loadCall();
-  }, [client, id]);
+  }, [client, id, toast]);
 
   return { call, isCallLoading };
 };

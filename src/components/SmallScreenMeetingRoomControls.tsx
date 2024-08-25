@@ -1,6 +1,6 @@
 "use state";
 
-import { Button } from "./ui/button";
+import CustomButton from "./CustomButton";
 import { useRouter } from "next/navigation";
 import CameraIcon from "./myCustomIcons/CameraIcon";
 import EndCallIcon from "./myCustomIcons/EndCallIcon";
@@ -20,10 +20,10 @@ const SmallScreenMeetingRoomControls = () => {
   const endCallHandler = async ({ reject }: { reject?: boolean }) => {
     await call?.camera.disable();
     await call?.microphone.disable();
-    if (call?.state?.participantCount !== 1) {
+    if (call?.state.participantCount !== 1) {
       await call?.leave({ reject });
     }
-    if (call?.state?.participantCount === 1) {
+    if (call?.state.participantCount === 1) {
       await call?.endCall();
     }
     router.replace("/");
@@ -31,7 +31,7 @@ const SmallScreenMeetingRoomControls = () => {
 
   return (
     <div className="flex sm:hidden items-center gap-3">
-      <Button
+      <CustomButton
         onClick={() => microphone.toggle()}
         className={`rounded-full outline-none ${
           micIsMute ? "bg-red-500" : "bg-gray-500"
@@ -40,8 +40,8 @@ const SmallScreenMeetingRoomControls = () => {
         <div className="w-[30px] h-[30px] flex items-center justify-center">
           {micIsMute ? <MutedMicrophoneIcon /> : <MicrophoneIcon />}
         </div>
-      </Button>
-      <Button
+      </CustomButton>
+      <CustomButton
         onClick={() => camera.toggle()}
         className={`rounded-full outline-none ${
           cameraIsMute ? "bg-red-500" : "bg-gray-500"
@@ -50,15 +50,15 @@ const SmallScreenMeetingRoomControls = () => {
         <div className="w-[30px] h-[30px] flex items-center justify-center">
           {cameraIsMute ? <MutedCameraIcon /> : <CameraIcon />}
         </div>
-      </Button>
-      <Button
-        className="bg-red-500 rounded-full outline-none"
+      </CustomButton>
+      <CustomButton
         onClick={() => endCallHandler({ reject: true })}
+        className="bg-red-500 hover:bg-red-700 rounded-full outline-none"
       >
         <div className="w-[30px] h-[30px] flex items-center justify-center">
           <EndCallIcon />
         </div>
-      </Button>
+      </CustomButton>
       <CustomRecordCallButton />
     </div>
   );

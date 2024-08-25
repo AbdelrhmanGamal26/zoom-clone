@@ -1,13 +1,20 @@
 import Image from "next/image";
+import loadingCircle from "../../public/icons/loading-circle.svg";
 
-const Loader = () => {
+const Loader = ({
+  width = 40,
+  height = 40,
+}: {
+  width?: number;
+  height?: number;
+}) => {
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <Image
-        src="/icons/loading-circle.svg"
+        src={loadingCircle}
         alt="loading..."
-        width={40}
-        height={40}
+        width={width}
+        height={height}
       />
     </div>
   );

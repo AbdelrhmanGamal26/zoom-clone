@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
-import { Button } from "./ui/button";
-import { Dialog, DialogContent } from "./ui/Dialog";
+import CustomButton from "./CustomButton";
+import { Dialog, DialogContent, DialogTitle } from "./ui/Dialog";
 
 interface MeetingModalProps {
   title: string;
@@ -35,12 +35,14 @@ const MeetingModal = ({
           className
         )}
       >
-        <h1 className="text-white text-xl font-bold">{title}</h1>
+        <DialogTitle className="text-white text-xl font-bold">
+          {title}
+        </DialogTitle>
         <div className="flex justify-center">
           {image && <Image src={image} alt="image" width={72} height={72} />}
         </div>
         {children}
-        <Button
+        <CustomButton
           className="bg-blue-1 mt-2 focus-visible:ring-0 focus-visible:ring-offset-0"
           onClick={handleClick}
         >
@@ -49,7 +51,7 @@ const MeetingModal = ({
           )}
           &nbsp;
           {buttonText || "Schedule meeting"}
-        </Button>
+        </CustomButton>
       </DialogContent>
     </Dialog>
   );

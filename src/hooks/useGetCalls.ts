@@ -1,11 +1,13 @@
 import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
 import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
 
 export const useGetCalls = () => {
   const { user } = useUser();
+  const { toast } = useToast();
   const client = useStreamVideoClient();
-  const [calls, setCalls] = useState<Call[]>();
+  const [calls, setCalls] = useState<Call[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -28,14 +30,14 @@ export const useGetCalls = () => {
 
         setCalls(calls);
       } catch (error) {
-        console.error("Failed to get calls", error);
+        toast({ title: "Failed to get calls" });
       } finally {
         setIsLoading(false);
       }
     };
 
     getCalls();
-  }, [client, user?.id]);
+  }, [client, user?.id, toast]);
 
   const now = new Date();
 

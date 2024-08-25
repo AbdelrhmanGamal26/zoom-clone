@@ -74,7 +74,6 @@ const MeetingCardsContainer = () => {
 
       toast({ title: "Meeting created" });
     } catch (error) {
-      console.error(error);
       toast({ title: "Failed to create meeting" });
     }
   };

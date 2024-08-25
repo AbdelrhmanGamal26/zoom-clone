@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useCall,
   CallControls,
@@ -11,31 +11,42 @@ import {
 } from "@stream-io/video-react-sdk";
 import { Users } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
+import CustomButton from "./CustomButton";
 import EndCallButton from "./EndCallButton";
-import { CallLayoutType } from "@/constants";
+import { usePathname, useRouter } from "next/navigation";
+import { CallLayoutType, LAYOUT_ITEMS } from "@/data/constants";
 import LayoutTogglerDropdownMenuContainer from "./DropdownMenu";
 import SmallScreenMeetingRoomControls from "./SmallScreenMeetingRoomControls";
 
-const layoutItems = ["grid", "speaker-left", "speaker-right"];
+const CallLayout = ({layout}: {layout: CallLayoutType}) => {
+  switch (layout) {
+    case LAYOUT_ITEMS.SPEAKER_RIGHT:
+      return <SpeakerLayout participantsBarPosition="left" />;
+    case LAYOUT_ITEMS.SPEAKER_LEFT:
+      return <SpeakerLayout participantsBarPosition="right" />;
+    default:
+      return <PaginatedGridLayout />;
+  }
+};
 
 const MeetingRoom = () => {
   const [layout, setLayout] = useState<CallLayoutType>("grid");
   const [showParticipants, setShowParticipants] = useState(false);
+  const pathname = usePathname();
   const router = useRouter();
   const { user } = useUser();
   const call = useCall();
 
-  const CallLayout = () => {
-    switch (layout) {
-      case "speaker-right":
-        return <SpeakerLayout participantsBarPosition="left" />;
-      case "speaker-left":
-        return <SpeakerLayout participantsBarPosition="right" />;
-      default :
-        return <PaginatedGridLayout />;
-    }
-  };
+
+  useEffect(() => {
+    const endCall = async () => {
+      if (!pathname.includes("/meeting")) {
+        await call?.endCall();
+      }
+    };
+
+    endCall();
+  }, [pathname, call]);
 
   const handleCallEndOrLeave = async () => {
     await call?.endCall();
@@ -45,11 +56,11 @@ const MeetingRoom = () => {
   return (
     <section className="flex flex-col h-screen w-full overflow-hidden pt-4 text-white">
       <div className="flex size-full items-center justify-center">
-        <div className="flex flex-col md:flex-row md:max-w-[1000px]">
-          <CallLayout />
+        <div className="flex flex-col md:flex-row md:justify-center md:items-center">
+          <CallLayout layout={layout} />
         </div>
         <div
-          className={cn("h-[calc(100vh-86px)] hidden ml-2", {
+          className={cn("h-[76vh] hidden ml-2", {
             "show-block": showParticipants,
           })}
         >
@@ -61,19 +72,16 @@ const MeetingRoom = () => {
           <CallControls onLeave={handleCallEndOrLeave} />
         </div>
         <SmallScreenMeetingRoomControls />
-        <LayoutTogglerDropdownMenuContainer
-          items={layoutItems}
-          onSetLayout={setLayout}
-        />
-        <button
+        <LayoutTogglerDropdownMenuContainer onSetLayout={setLayout} />
+        <CustomButton
           onClick={() => setShowParticipants((prev) => !prev)}
-          className="outline-none hidden md:block"
+          className="outline-none hidden md:flex justify-center items-center p-0"
         >
           <div className="p-2.5 hover:bg-[#323B44] rounded-full">
             <Users size={20} />
           </div>
-        </button>
-        {user?.id === call?.state?.createdBy?.id && <EndCallButton />}
+        </CustomButton>
+        {user?.id === call?.state.createdBy?.id && <EndCallButton />}
       </div>
     </section>
   );

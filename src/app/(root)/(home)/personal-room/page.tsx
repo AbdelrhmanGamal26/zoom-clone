@@ -1,31 +1,13 @@
 "use client";
 
+import Table from "@/components/Table";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import PagesHeader from "@/components/PagesHeader";
+import CustomButton from "@/components/CustomButton";
 import { useToast } from "@/components/ui/use-toast";
 import { useGetCallById } from "@/hooks/useGetCallById";
 import { useStreamVideoClient } from "@stream-io/video-react-sdk";
-
-const Table = ({
-  title,
-  description,
-}: {
-  title: string;
-  description: string;
-}) => {
-  return (
-    <div className="flex flex-col items-start gap-2 xl:gap-4 xl:flex-row xl:items-center w-full">
-      <h1 className="text-[clamp(14px,1.5vw,18px)] font-medium text-sky-100">
-        {title}
-      </h1>
-      <p className="truncate font-medium text-[clamp(12px,1.5vw,16px)] w-[99%] sm:w-auto">
-        {description}
-      </p>
-    </div>
-  );
-};
 
 const PersonalRoom = () => {
   const { user } = useUser();
@@ -67,18 +49,19 @@ const PersonalRoom = () => {
         <Table title="Invite Link" description={meetingLink} />
       </div>
       <div className="mt-10 flex justify-center xl:justify-start gap-10">
-        <Button className="bg-blue-1 p-2 text-[14px]" onClick={startMeeting}>
-          Start meeting
-        </Button>
-        <Button
+        <CustomButton
+          className="bg-blue-1 p-2 text-[14px]"
+          onClick={startMeeting}
+          textContent="Start meeting"
+        />
+        <CustomButton
           className="bg-dark-4 p-2 text-[14px]"
           onClick={() => {
             navigator.clipboard.writeText(meetingLink);
             toast({ title: "Link copied" });
           }}
-        >
-          Copy invitation
-        </Button>
+          textContent="Copy invitation"
+        />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "./ui/button";
+import CustomButton from "./CustomButton";
 import { Card, CardContent } from "./ui/card";
 
 interface PermissionCardProps {
@@ -22,9 +22,9 @@ const Alert = ({ title, iconUrl }: PermissionCardProps) => {
               )}
               <p className="text-center text-xl font-semibold">{title}</p>
             </div>
-            <Button asChild className="bg-blue-1">
+            <CustomButton asChild className="bg-blue-1">
               <Link href="/">Back to Home</Link>
-            </Button>
+            </CustomButton>
           </div>
         </CardContent>
       </Card>
